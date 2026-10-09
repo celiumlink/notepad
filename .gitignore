@@ -1,0 +1,4 @@
+.cut/
+app/html/artifacts/
+.env
+.env.*

@@ -1,0 +1,13 @@
+{
+  "name": "streamprocessing",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./core": "./src/index.mjs",
+    "./transport": "./src/transports/http.mjs"
+  },
+  "scripts": {
+    "start": "node app/html/server.mjs"
+  }
+}

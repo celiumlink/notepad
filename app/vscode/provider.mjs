@@ -18,7 +18,7 @@ export class ThoughtstreamProvider {
     return {
       enabled: config.get('enabled', true), automatic: config.get('automatic', true),
       host: config.get('host', 'http://127.0.0.1:11434'), model: config.get('model', 'qwen-local'),
-      languages: config.get('languages', ['markdown', 'plaintext']),
+      languages: config.get('languages', ['*']),
       delay: config.get('delay', 800), contextCharacters: config.get('contextCharacters', 6000),
       intent: config.get('intent', ''),
       options: { temperature: config.get('temperature', 0.5), num_predict: config.get('maxTokens', 32) }
@@ -65,6 +65,7 @@ export class ThoughtstreamProvider {
     const text = document.getText(), offset = document.offsetAt(position);
     const input = { prefix: text.slice(Math.max(0, offset - settings.contextCharacters), offset),
       suffix: text.slice(offset, offset + settings.contextCharacters), mode: 'complete',
+      preserveFormatting: !['markdown', 'plaintext'].includes(document.languageId),
       intent: settings.intent, options: settings.options, ...this.references() };
     if (!input.prefix.trim()) return [];
     this.onState({ input, model: settings.model, error: '', rawSuggestion: '', suggestion: '', cached: false });

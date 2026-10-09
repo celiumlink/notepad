@@ -44,7 +44,8 @@ function overlap(left, right, side) {
   }
   return 0;
 }
-export function joinCompletion({ prefix = '', suffix = '', suggestion = '', mode = 'complete', complete = true }) {
+export function joinCompletion({ prefix = '', suffix = '', suggestion = '', mode = 'complete', complete = true, preserveFormatting = false }) {
+  if (preserveFormatting) return suggestion;
   if (mode === 'hint') return suggestion;
   if (!suggestion) return '';
   // A cursor inside an existing word is not a safe prose insertion point.

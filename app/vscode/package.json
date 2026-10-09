@@ -2,7 +2,7 @@
   "name": "thoughtstream",
   "displayName": "Thoughtstream",
   "description": "Local Ollama writing completions powered by the shared Thoughtstream kernel.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "thoughtstream-local",
   "license": "MIT",
   "engines": {
@@ -105,10 +105,9 @@
             "type": "string"
           },
           "default": [
-            "markdown",
-            "plaintext"
+            "*"
           ],
-          "description": "Enabled language IDs. Use * to enable all languages. The kernel is tuned for prose."
+          "description": "Enabled file language IDs. Defaults to all file types; optionally restrict to specific language IDs."
         },
         "thoughtstream.delay": {
           "type": "integer",
@@ -220,5 +219,8 @@
   },
   "devDependencies": {
     "@vscode/vsce": "^4.0.0"
+  },
+  "dependencies": {
+    "streamprocessing": "file:../.."
   }
 }

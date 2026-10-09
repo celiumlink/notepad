@@ -24,7 +24,7 @@ The extracted kernel and HTML app are copies; the original files remain there.
 
 The shared VS Code / VSCodium extension lives in `app/vscode/`. Run
 `npm --prefix app/vscode ci`, then `npm test` or `npm run package:extension`.
-Install the generated `app/vscode/thoughtstream-0.2.0.vsix` through
+Install the generated `app/vscode/thoughtstream-0.2.1.vsix` through
 **Extensions: Install from VSIX** in either editor. See `app/vscode/README.md`
 for setup and development instructions.
 

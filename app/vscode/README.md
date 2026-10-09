@@ -6,11 +6,11 @@ no HTML server is needed.
 
 ## Install and use
 
-Install `thoughtstream-0.2.0.vsix` using **Extensions: Install from VSIX** in
+Install `thoughtstream-0.2.1.vsix` using **Extensions: Install from VSIX** in
 either editor. Start Ollama, then set **Thoughtstream: Model** to an installed
 model (default: `qwen-local`). Run **Thoughtstream: Check Model Connection**.
 
-Open a Markdown or plain text file and type. Suggestions appear as ghost text
+Open any text or code file and type. Suggestions appear as ghost text
 after a pause; **Tab** accepts and **Escape** dismisses using the editor's normal
 inline suggestion controls. **Ctrl+Alt+Space** (**Cmd+Alt+Space** on macOS)
 requests a fresh continuation. **Thoughtstream: Toggle Suggestions** enables or
@@ -18,7 +18,7 @@ disables the provider. The editor's `editor.inlineSuggest.enabled` must be on.
 
 Settings under `thoughtstream` configure the host, model, enabled languages
 (`*` for all), automatic suggestions, delay, context limit, generation length,
-temperature, and optional writing direction. The kernel is tuned for prose.
+temperature, and optional writing direction. All file types are enabled by default. Code and structured files preserve generated formatting; Markdown and plain text use prose cleanup.
 Transport errors appear in **Output → Thoughtstream**.
 
 Open the Thoughtstream activity bar icon for the writing companion: connection

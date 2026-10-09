@@ -76,6 +76,17 @@ test('manual requests work with automatic suggestions off; cancelled debounce do
   assert.deepEqual(await pending, []); assert.equal(waiting.calls.length, 0);
 });
 
+test('default settings enable Python and other file types for manual and automatic requests', async () => {
+  for (const languageId of ['python', 'javascript', 'json', 'yaml', 'unknown']) {
+    const f = fixture(); delete f.settings.languages; f.document.languageId = languageId;
+    let input;
+    f.provider.onState = state => { if (state.input) input = state.input; };
+    assert.equal((await f.request(1)).length, 1);
+    assert.equal(input.preserveFormatting, true);
+    assert.equal((await f.request()).length, 1);
+  }
+});
+
 test('a cancelled in-flight stream is aborted and returns no suggestion', async () => {
   let started, signal;
   const ready = new Promise(resolve => { started = resolve; });

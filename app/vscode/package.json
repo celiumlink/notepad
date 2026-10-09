@@ -1,0 +1,230 @@
+{
+  "name": "thoughtstream",
+  "displayName": "Thoughtstream",
+  "description": "Local Ollama writing completions powered by the shared Thoughtstream kernel.",
+  "version": "0.1.0",
+  "publisher": "thoughtstream-local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.cjs",
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    }
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "vscode:prepublish": "npm run build",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "package": "vsce package --no-dependencies --allow-missing-repository"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "thoughtstream.suggest",
+        "title": "Thoughtstream: Suggest Fresh Continuation",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "thoughtstream.toggle",
+        "title": "Thoughtstream: Toggle Suggestions",
+        "icon": "$(debug-pause)"
+      },
+      {
+        "command": "thoughtstream.checkModel",
+        "title": "Thoughtstream: Check Model Connection",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "thoughtstream.modelReady",
+        "title": "Thoughtstream: LLM Ready ? Check Connection",
+        "icon": "$(pass)"
+      },
+      {
+        "command": "thoughtstream.addPreContext",
+        "title": "Thoughtstream: Add Selection as Pre-context",
+        "icon": "$(arrow-up)"
+      },
+      {
+        "command": "thoughtstream.addPostContext",
+        "title": "Thoughtstream: Add Selection as Post-context",
+        "icon": "$(arrow-down)"
+      },
+      {
+        "command": "thoughtstream.removeContext",
+        "title": "Thoughtstream: Remove Reference",
+        "icon": "$(trash)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "thoughtstream.suggest",
+        "key": "ctrl+alt+space",
+        "mac": "cmd+alt+space",
+        "when": "editorTextFocus && !editorReadonly"
+      }
+    ],
+    "configuration": {
+      "title": "Thoughtstream",
+      "properties": {
+        "thoughtstream.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable Thoughtstream suggestions."
+        },
+        "thoughtstream.automatic": {
+          "type": "boolean",
+          "default": true,
+          "description": "Suggest automatically after typing pauses."
+        },
+        "thoughtstream.host": {
+          "type": "string",
+          "default": "http://127.0.0.1:11434",
+          "scope": "machine",
+          "description": "Ollama server URL. In remote workspaces this address is relative to the remote extension host."
+        },
+        "thoughtstream.model": {
+          "type": "string",
+          "default": "qwen-local",
+          "description": "Installed Ollama model name."
+        },
+        "thoughtstream.languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "markdown",
+            "plaintext"
+          ],
+          "description": "Enabled language IDs. Use * to enable all languages. The kernel is tuned for prose."
+        },
+        "thoughtstream.delay": {
+          "type": "integer",
+          "default": 800,
+          "minimum": 0,
+          "maximum": 5000,
+          "description": "Pause before an automatic request, in milliseconds."
+        },
+        "thoughtstream.contextCharacters": {
+          "type": "integer",
+          "default": 6000,
+          "minimum": 256,
+          "maximum": 16000,
+          "description": "Maximum characters sent on each side of the cursor."
+        },
+        "thoughtstream.temperature": {
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0,
+          "maximum": 2
+        },
+        "thoughtstream.maxTokens": {
+          "type": "integer",
+          "default": 32,
+          "minimum": 1,
+          "maximum": 128
+        },
+        "thoughtstream.intent": {
+          "type": "string",
+          "default": "",
+          "description": "Optional writing direction included in prompts."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "thoughtstream",
+          "title": "Thoughtstream",
+          "icon": "media/thoughtstream.svg"
+        }
+      ]
+    },
+    "views": {
+      "thoughtstream": [
+        {
+          "id": "thoughtstream.state",
+          "name": "Completion State"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "thoughtstream.checkModel",
+          "when": "view == thoughtstream.state && !thoughtstream.modelReady",
+          "group": "navigation"
+        },
+        {
+          "command": "thoughtstream.modelReady",
+          "when": "view == thoughtstream.state && thoughtstream.modelReady",
+          "group": "navigation"
+        },
+        {
+          "command": "thoughtstream.suggest",
+          "when": "view == thoughtstream.state",
+          "group": "navigation"
+        },
+        {
+          "command": "thoughtstream.toggle",
+          "when": "view == thoughtstream.state",
+          "group": "navigation"
+        },
+        {
+          "command": "thoughtstream.addPreContext",
+          "when": "view == thoughtstream.state",
+          "group": "navigation"
+        },
+        {
+          "command": "thoughtstream.addPostContext",
+          "when": "view == thoughtstream.state",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "thoughtstream.removeContext",
+          "when": "view == thoughtstream.state && viewItem == reference",
+          "group": "inline"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "thoughtstream.addPreContext",
+          "when": "editorHasSelection",
+          "group": "thoughtstream"
+        },
+        {
+          "command": "thoughtstream.addPostContext",
+          "when": "editorHasSelection",
+          "group": "thoughtstream"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "thoughtstream.removeContext",
+          "when": "false"
+        },
+        {
+          "command": "thoughtstream.modelReady",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^4.0.0"
+  }
+}

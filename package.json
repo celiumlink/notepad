@@ -8,6 +8,9 @@
     "./transport": "./src/transports/http.mjs"
   },
   "scripts": {
-    "start": "node app/html/server.mjs"
+    "start": "node app/html/server.mjs",
+    "build:extension": "npm --prefix app/vscode run build",
+    "test": "npm --prefix app/vscode test",
+    "package:extension": "npm --prefix app/vscode run package"
   }
 }

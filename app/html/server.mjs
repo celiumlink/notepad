@@ -31,7 +31,7 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200, { 'Content-Type': font ? (font[1].endsWith('.woff2') ? 'font/woff2' : font[1].endsWith('.woff') ? 'font/woff' : 'font/ttf') : req.url.endsWith('.css') ? 'text/css' : 'text/javascript' });
       res.end(await readFile(new URL('./vendor/' + (vendors[req.url] || 'fonts/' + font[1]), import.meta.url))); return;
     }
-    if (req.method === 'GET' && ['/src/completion-controller.mjs', '/src/completion-join.mjs', '/src/input-session.mjs', '/src/prompt.mjs', '/src/context-marks.mjs', '/src/index.mjs', '/src/transports/http.mjs'].includes(req.url)) {
+    if (req.method === 'GET' && ['/src/completion-controller.mjs', '/src/completion-join.mjs', '/src/input-session.mjs', '/src/prompt.mjs', '/src/context-marks.mjs', '/src/context-store.mjs', '/src/kernel.mjs', '/src/index.mjs', '/src/transports/http.mjs'].includes(req.url)) {
       res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8' });
       res.end(await readFile(new URL(`../..${req.url}`, import.meta.url))); return;
     }

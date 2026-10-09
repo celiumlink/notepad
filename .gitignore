@@ -2,3 +2,7 @@
 app/html/artifacts/
 .env
 .env.*
+app/vscode/kernel/
+app/vscode/LICENSE
+app/vscode/node_modules/
+app/vscode/*.vsix

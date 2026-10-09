@@ -25,21 +25,20 @@ export function buildCompletion({ prefix = '', suffix = '', mode = 'complete', i
     add('draft', prefix);
     return { prompt: prefix, segments, stop };
   }
-  add('template', mode === 'hint'
-    ? 'Task: Suggest one brief next thought that fits the writing. Output only the thought.\n\n'
-    : 'Task: Complete [gap] in the passage. Output only the missing text. Match the voice and language; preserve Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n');
   references('pre', preContext);
   references('post', postContext);
   if (intent) add('guidance', 'Writing direction: ' + intent + '\n\n');
-  if (mode === 'hint') {
-    add('template', 'Passage: I want more time for the things I care about.\nNext thought: What could I stop doing to make room?\n\nPassage: ');
-    add('draft', prefix + '[cursor]' + suffix);
-    add('template', '\nNext thought:');
-  } else {
-    add('template', 'Passage: I need [gap] to think.\nMissing text: more time\n\nPassage: She called it "[gap]"; I called it home.\nMissing text: a beautiful mess\n\nPassage: ');
-    add('draft', prefix); add('gap', '[gap]'); add('draft', suffix);
-    add('template', '\nMissing text:');
+  add('template', mode === 'hint'
+    ? 'Suggest one brief next thought in the language of the draft. Output only the thought, without explanations or translations.\n'
+    : 'Continue the draft in its own language. Output only the insertion, without explanations or translations.\n');
+  if (suffix) {
+    add('template', '\nExisting text after the cursor:\n');
+    add('draft', suffix); add('template', '\n');
   }
+  // References and directions must not supply the language of the continuation.
+  // Keep the author's text last so raw generation starts in the draft's language.
+  add('template', '\nDraft:\n');
+  add('draft', prefix + (mode === 'hint' ? '\n' : ''));
   return { prompt: segments.map(s => s.text).join(''), segments, stop: ['[gap]', '\nPassage:', '\nMissing text:', ...stop] };
 }
 export function buildModelRequest(input, model) {

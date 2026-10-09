@@ -1,0 +1,578 @@
+{
+  "timestamp": "2026-10-09T08:52:53.698Z",
+  "model": "qwen-local",
+  "details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "qwen2",
+    "families": [
+      "qwen2"
+    ],
+    "parameter_size": "3.1B",
+    "quantization_level": "Q4_K_M"
+  },
+  "options": {
+    "temperature": 0,
+    "top_p": 0.9,
+    "num_predict": 32,
+    "num_ctx": 4096,
+    "repeat_penalty": 1.1
+  },
+  "runs": [
+    {
+      "case": "German infill with English reference",
+      "input": {
+        "name": "German infill with English reference",
+        "prefix": "Heute möchte ich mehr Zeit für",
+        "suffix": " finden.",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Make room for what matters."
+          }
+        ]
+      },
+      "variant": "baseline",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Match the voice and language; preserve Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nMake room for what matters.\n\n---\n\nPassage: I need [gap] to think.\nMissing text: more time\n\nPassage: She called it \"[gap]\"; I called it home.\nMissing text: a beautiful mess\n\nPassage: Heute möchte ich mehr Zeit für[gap] finden.\nMissing text:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " mich",
+      "doneReason": "stop"
+    },
+    {
+      "case": "German infill with English reference",
+      "input": {
+        "name": "German infill with English reference",
+        "prefix": "Heute möchte ich mehr Zeit für",
+        "suffix": " finden.",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Make room for what matters."
+          }
+        ]
+      },
+      "variant": "instructionOnly",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Preserve the voice, Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nMake room for what matters.\n\n---\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: Heute möchte ich mehr Zeit für[gap] finden.\nMissing text:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " \"Heute möchte ich mehr Zeit für mich selbst finden.\"",
+      "doneReason": "stop"
+    },
+    {
+      "case": "German infill with English reference",
+      "input": {
+        "name": "German infill with English reference",
+        "prefix": "Heute möchte ich mehr Zeit für",
+        "suffix": " finden.",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Make room for what matters."
+          }
+        ]
+      },
+      "variant": "anchored",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Preserve the voice, Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nMake room for what matters.\n\n---\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: Heute möchte ich mehr Zeit für[gap] finden.\nMissing text:\nContinue from the cursor:\nHeute möchte ich mehr Zeit für",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " ",
+      "doneReason": "stop"
+    },
+    {
+      "case": "French with English direction",
+      "input": {
+        "name": "French with English direction",
+        "prefix": "Je voudrais prendre plus de temps pour",
+        "suffix": "",
+        "mode": "complete",
+        "intent": "Keep it brief."
+      },
+      "variant": "baseline",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Match the voice and language; preserve Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\nWriting direction: Keep it brief.\n\nPassage: I need [gap] to think.\nMissing text: more time\n\nPassage: She called it \"[gap]\"; I called it home.\nMissing text: a beautiful mess\n\nPassage: Je voudrais prendre plus de temps pour[gap]\nMissing text:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " réfléchir.",
+      "doneReason": "stop"
+    },
+    {
+      "case": "French with English direction",
+      "input": {
+        "name": "French with English direction",
+        "prefix": "Je voudrais prendre plus de temps pour",
+        "suffix": "",
+        "mode": "complete",
+        "intent": "Keep it brief."
+      },
+      "variant": "instructionOnly",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Preserve the voice, Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\nWriting direction: Keep it brief.\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: Je voudrais prendre plus de temps pour[gap]\nMissing text:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " Je voudrais prendre plus de temps pour",
+      "doneReason": "stop"
+    },
+    {
+      "case": "French with English direction",
+      "input": {
+        "name": "French with English direction",
+        "prefix": "Je voudrais prendre plus de temps pour",
+        "suffix": "",
+        "mode": "complete",
+        "intent": "Keep it brief."
+      },
+      "variant": "anchored",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Preserve the voice, Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\nWriting direction: Keep it brief.\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: Je voudrais prendre plus de temps pour[gap]\nMissing text:\nContinue from the cursor:\nJe voudrais prendre plus de temps pour",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": "",
+      "doneReason": "stop"
+    },
+    {
+      "case": "Spanish with English reference",
+      "input": {
+        "name": "Spanish with English reference",
+        "prefix": "Quiero pasar más tiempo con",
+        "suffix": "",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Friends and family."
+          }
+        ]
+      },
+      "variant": "baseline",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Match the voice and language; preserve Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nFriends and family.\n\n---\n\nPassage: I need [gap] to think.\nMissing text: more time\n\nPassage: She called it \"[gap]\"; I called it home.\nMissing text: a beautiful mess\n\nPassage: Quiero pasar más tiempo con[gap]\nMissing text:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " mi familia y mis amigos",
+      "doneReason": "stop"
+    },
+    {
+      "case": "Spanish with English reference",
+      "input": {
+        "name": "Spanish with English reference",
+        "prefix": "Quiero pasar más tiempo con",
+        "suffix": "",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Friends and family."
+          }
+        ]
+      },
+      "variant": "instructionOnly",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Preserve the voice, Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nFriends and family.\n\n---\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: Quiero pasar más tiempo con[gap]\nMissing text:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " with my friends and family.\nYou are an AI assistant that follows instruction extremely well. Help as much as you can.",
+      "doneReason": "stop"
+    },
+    {
+      "case": "Spanish with English reference",
+      "input": {
+        "name": "Spanish with English reference",
+        "prefix": "Quiero pasar más tiempo con",
+        "suffix": "",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Friends and family."
+          }
+        ]
+      },
+      "variant": "anchored",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Preserve the voice, Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nFriends and family.\n\n---\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: Quiero pasar más tiempo con[gap]\nMissing text:\nContinue from the cursor:\nQuiero pasar más tiempo con",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " mis amigos y familiares.",
+      "doneReason": "stop"
+    },
+    {
+      "case": "Japanese with English reference",
+      "input": {
+        "name": "Japanese with English reference",
+        "prefix": "今日はもっと",
+        "suffix": "",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Make room for friends and family."
+          }
+        ]
+      },
+      "variant": "baseline",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Match the voice and language; preserve Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nMake room for friends and family.\n\n---\n\nPassage: I need [gap] to think.\nMissing text: more time\n\nPassage: She called it \"[gap]\"; I called it home.\nMissing text: a beautiful mess\n\nPassage: 今日はもっと[gap]\nMissing text:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " よく眠れる日だった。\n",
+      "doneReason": "stop"
+    },
+    {
+      "case": "Japanese with English reference",
+      "input": {
+        "name": "Japanese with English reference",
+        "prefix": "今日はもっと",
+        "suffix": "",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Make room for friends and family."
+          }
+        ]
+      },
+      "variant": "instructionOnly",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Preserve the voice, Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nMake room for friends and family.\n\n---\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: 今日はもっと[gap]\nMissing text:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " 今日、もっとゆっくり歩くようにしましょう。",
+      "doneReason": "stop"
+    },
+    {
+      "case": "Japanese with English reference",
+      "input": {
+        "name": "Japanese with English reference",
+        "prefix": "今日はもっと",
+        "suffix": "",
+        "mode": "complete",
+        "preContext": [
+          {
+            "label": "Reference",
+            "text": "Make room for friends and family."
+          }
+        ]
+      },
+      "variant": "anchored",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Complete [gap] in the passage. Output only the missing text. Preserve the voice, Markdown structure and paragraph breaks. Do not repeat surrounding text.\n\n### Reference\n\nMake room for friends and family.\n\n---\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: 今日はもっと[gap]\nMissing text:\nContinue from the cursor:\n今日はもっと",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": "\n今日、私は友達と家族のためにスペースを確保する必要があります。",
+      "doneReason": "stop"
+    },
+    {
+      "case": "German hint with English reference",
+      "input": {
+        "name": "German hint with English reference",
+        "prefix": "Ich möchte meinen Alltag ruhiger gestalten.",
+        "suffix": "",
+        "mode": "hint",
+        "postContext": [
+          {
+            "label": "Goal",
+            "text": "Less stress and more time for friends."
+          }
+        ]
+      },
+      "variant": "baseline",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Suggest one brief next thought that fits the writing. Output only the thought.\n\n### Goal\n\nLess stress and more time for friends.\n\n---\n\nPassage: I want more time for the things I care about.\nNext thought: What could I stop doing to make room?\n\nPassage: Ich möchte meinen Alltag ruhiger gestalten.[cursor]\nNext thought:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " Wie könnte ich meine Arbeit einfacher machen?",
+      "doneReason": "stop"
+    },
+    {
+      "case": "German hint with English reference",
+      "input": {
+        "name": "German hint with English reference",
+        "prefix": "Ich möchte meinen Alltag ruhiger gestalten.",
+        "suffix": "",
+        "mode": "hint",
+        "postContext": [
+          {
+            "label": "Goal",
+            "text": "Less stress and more time for friends."
+          }
+        ]
+      },
+      "variant": "instructionOnly",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Suggest one brief next thought that fits the writing. Output only the thought.\n\n### Goal\n\nLess stress and more time for friends.\n\n---\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: Ich möchte meinen Alltag ruhiger gestalten.[cursor]\nNext thought:",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": " I want to make my daily life more peaceful.\nYou are an AI assistant that follows instruction extremely well. Help as much as you can.",
+      "doneReason": "stop"
+    },
+    {
+      "case": "German hint with English reference",
+      "input": {
+        "name": "German hint with English reference",
+        "prefix": "Ich möchte meinen Alltag ruhiger gestalten.",
+        "suffix": "",
+        "mode": "hint",
+        "postContext": [
+          {
+            "label": "Goal",
+            "text": "Less stress and more time for friends."
+          }
+        ]
+      },
+      "variant": "anchored",
+      "request": {
+        "model": "qwen-local",
+        "prompt": "Task: Suggest one brief next thought that fits the writing. Output only the thought.\n\n### Goal\n\nLess stress and more time for friends.\n\n---\n\nInfer the output language from the author's passage immediately around the cursor or gap. Reference texts, writing directions, and these instructions may use other languages. Continue the draft in its own language; do not add a translation, explanation, or language label.\n\nPassage: Ich möchte meinen Alltag ruhiger gestalten.[cursor]\nNext thought:\nContinue from the cursor:\nIch möchte meinen Alltag ruhiger gestalten.\n",
+        "raw": true,
+        "stream": false,
+        "options": {
+          "temperature": 0,
+          "top_p": 0.9,
+          "num_predict": 32,
+          "num_ctx": 4096,
+          "repeat_penalty": 1.1,
+          "stop": [
+            "[gap]",
+            "\nPassage:",
+            "\nMissing text:",
+            "<|endoftext|>",
+            "<|im_end|>"
+          ]
+        }
+      },
+      "output": "To simplify my daily routine and have more time for friends.",
+      "doneReason": "stop"
+    }
+  ]
+}

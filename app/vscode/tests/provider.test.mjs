@@ -21,7 +21,7 @@ function fixture(overrides = {}, fetchImpl) {
     window: { activeTextEditor: { document, selection, selections: [selection] },
       createOutputChannel: () => ({ ...disposable, appendLine: message => errors.push(message) }),
       onDidChangeTextEditorSelection: () => disposable, onDidChangeActiveTextEditor: () => disposable,
-      createStatusBarItem: () => ({ ...disposable, show() {} }), createTreeView: () => disposable,
+      createStatusBarItem: () => ({ ...disposable, show() {} }), registerWebviewViewProvider: () => disposable,
       createTextEditorDecorationType: () => disposable, visibleTextEditors: [] },
     StatusBarAlignment: { Right: 1 }, ThemeColor: class {},
     EventEmitter: class { event() {} fire() {} dispose() {} },
@@ -48,7 +48,8 @@ test('maps cursor context to raw Ollama request and insertion-only ghost text; r
   assert.equal(item.insertText, 'beautiful ');
   assert.equal(item.range.start, f.position);
   assert.equal(item.range.end, f.position);
-  assert.match(f.calls[0].body.prompt, /Hello \[gap\]world/);
+  assert.match(f.calls[0].body.prompt, /Existing text after the cursor:\nworld/);
+  assert.ok(f.calls[0].body.prompt.endsWith('Hello '));
   assert.equal(f.calls[0].url, 'http://localhost:11434/api/generate');
   assert.equal(f.calls[0].body.model, 'test');
   assert.equal(f.calls[0].body.raw, true);
@@ -104,7 +105,8 @@ test('transport failures are surfaced and do not produce ghost text', async () =
 
 test('context limits apply and switching models invalidates transport cache', async () => {
   const f = fixture({ contextCharacters: 3 }); await f.request();
-  assert.match(f.calls[0].body.prompt, /lo \[gap\]wor/);
+  assert.match(f.calls[0].body.prompt, /Existing text after the cursor:\nwor/);
+  assert.ok(f.calls[0].body.prompt.endsWith('lo '));
   f.settings.model = 'other'; await f.request();
   assert.equal(f.calls[1].body.model, 'other');
 });

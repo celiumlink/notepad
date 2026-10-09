@@ -12,12 +12,25 @@ export function activate(vscode, context, fetchImpl = globalThis.fetch) {
     fetchImpl, references: () => references.snapshot(), onState: state => view.update(state),
     onError: error => { output.appendLine(error.message); view.update({ error: error.message }); }
   });
-  const view = new StateView(vscode, () => provider.settings(vscode.window.activeTextEditor?.document), () => references.blocks);
+  const view = new StateView(vscode, () => provider.settings(vscode.window.activeTextEditor?.document), () => references.blocks, {
+    extensionUri: context.extensionUri,
+    handleMessage: async ({ action, side, index, value }) => {
+      if (action === 'setIntent') {
+        if (typeof value === 'string') await vscode.workspace.getConfiguration('thoughtstream').update('intent', value, vscode.ConfigurationTarget.Global);
+      } else if (['editContext', 'removeContext'].includes(action)) {
+        if (['preContext', 'postContext'].includes(side) && Number.isInteger(index) && references.blocks[side][index])
+          await vscode.commands.executeCommand('thoughtstream.' + action, { side, index });
+      } else {
+        if (['suggest', 'addPreContext', 'addPostContext'].includes(action)) await vscode.commands.executeCommand('workbench.action.focusActiveEditorGroup');
+        await vscode.commands.executeCommand('thoughtstream.' + action);
+      }
+    }
+  });
   const check = () => view.check(fetchImpl);
   const timer = setInterval(check, 30000); timer.unref();
   const command = (name, handler) => vscode.commands.registerCommand('thoughtstream.' + name, handler);
   context.subscriptions.push(output, provider, view, references, { dispose: () => clearInterval(timer) },
-    vscode.window.createTreeView('thoughtstream.state', { treeDataProvider: view }),
+    vscode.window.registerWebviewViewProvider('thoughtstream.state', view),
     vscode.languages.registerInlineCompletionItemProvider(['file', 'untitled', 'vscode-remote'].map(scheme => ({ scheme })), provider),
     command('suggest', async () => {
       provider.requestFresh();

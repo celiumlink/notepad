@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src {{source}}; script-src 'nonce-{{nonce}}';">
+  <link rel="stylesheet" href="{{style}}"><title>Thoughtstream</title>
+</head>
+<body>
+  <main>
+    <header><p class="eyebrow">THOUGHTSTREAM</p><h1>A little room<br>for your next thought.</h1><p class="muted">Your words. Your language. A helping hand.</p></header>
+    <section class="model-card" aria-label="Model connection"><div><span id="connection" class="badge">Checking model</span><p id="model" class="model-name"></p></div><button class="quiet" data-action="checkModel" aria-label="Check model connection">↻</button></section>
+    <p id="error" role="alert" hidden></p>
+    <section class="controls"><span>Writing assistance</span><button id="toggle" class="switch" data-action="toggle" aria-pressed="true">On</button></section>
+    <section class="context-section before"><div class="section-head"><div><p class="eyebrow">BEFORE</p><h2>Background</h2></div><span id="pre-count" class="count">0</span></div><p class="muted">Ideas and references to draw from.</p><div id="preContext" class="references"></div><button class="add" data-action="addPreContext">+ Add selected text</button></section>
+    <section class="context-section after"><div class="section-head"><div><p class="eyebrow">AFTER</p><h2>Looking ahead</h2></div><span id="post-count" class="count">0</span></div><p class="muted">Context for where your writing is going.</p><div id="postContext" class="references"></div><button class="add" data-action="addPostContext">+ Add selected text</button></section>
+    <section class="direction"><label for="intent">A little direction <span class="muted">optional</span></label><textarea id="intent" rows="2" placeholder="Keep it gentle. Make it shorter. Explore the idea…"></textarea></section>
+    <section class="suggestion-card"><div class="section-head"><h2>Your next words</h2><span id="phase" class="muted" aria-live="polite">Ready when you are</span></div><p id="suggestion" class="suggestion empty">Start writing in your editor. A suggestion will appear when you pause.</p><button id="suggest" class="primary" data-action="suggest">Continue writing <span aria-hidden="true">↗</span></button><p class="shortcut"><kbd>Tab</kbd> to accept · <kbd>Esc</kbd> to dismiss</p></section>
+    <p class="footnote">Language follows the text at your cursor.</p>
+    <details id="details"><summary>Under the hood</summary><p class="muted">The current context and model request, for when you want a closer look.</p><pre id="debug"></pre></details>
+  </main>
+  <script nonce="{{nonce}}" src="{{script}}"></script>
+</body>
+</html>

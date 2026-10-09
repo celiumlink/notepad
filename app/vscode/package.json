@@ -2,7 +2,7 @@
   "name": "thoughtstream",
   "displayName": "Thoughtstream",
   "description": "Local Ollama writing completions powered by the shared Thoughtstream kernel.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "thoughtstream-local",
   "license": "MIT",
   "engines": {
@@ -156,7 +156,8 @@
       "thoughtstream": [
         {
           "id": "thoughtstream.state",
-          "name": "Completion State"
+          "name": "Writing Companion",
+          "type": "webview"
         }
       ]
     },
@@ -191,13 +192,6 @@
           "command": "thoughtstream.addPostContext",
           "when": "view == thoughtstream.state",
           "group": "navigation"
-        }
-      ],
-      "view/item/context": [
-        {
-          "command": "thoughtstream.removeContext",
-          "when": "view == thoughtstream.state && viewItem == reference",
-          "group": "inline"
         }
       ],
       "editor/context": [

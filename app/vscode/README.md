@@ -6,7 +6,7 @@ no HTML server is needed.
 
 ## Install and use
 
-Install `thoughtstream-0.1.0.vsix` using **Extensions: Install from VSIX** in
+Install `thoughtstream-0.2.0.vsix` using **Extensions: Install from VSIX** in
 either editor. Start Ollama, then set **Thoughtstream: Model** to an installed
 model (default: `qwen-local`). Run **Thoughtstream: Check Model Connection**.
 
@@ -21,9 +21,10 @@ Settings under `thoughtstream` configure the host, model, enabled languages
 temperature, and optional writing direction. The kernel is tuned for prose.
 Transport errors appear in **Output → Thoughtstream**.
 
-Open the Thoughtstream activity bar icon for the live state sidebar: model
-connection, completion phase, cache use, raw response, cleaned suggestion,
-input context, and exact model request. Click a field to copy its full value.
+Open the Thoughtstream activity bar icon for the writing companion: connection
+status, background references, context for what comes next, writing direction,
+and the current suggestion. **Under the hood** contains the raw response,
+input context, cache state, and exact model request when you want to inspect them.
 The status bar shows the model with a ready, busy, disabled, or warning icon;
 the sidebar toolbar also indicates model readiness. Connection checks run
 every 30 seconds and can be triggered by clicking the indicator.
@@ -34,7 +35,7 @@ a label; the kernel includes it in subsequent prompts. These references live
 in the workspace state, with separate pre/post lists in the sidebar. Original
 source excerpts are highlighted green/purple. Click a reference to edit its
 Markdown in a second editor; changes update the context immediately. Remove
-references using their trash button. Limits are 4,000 characters per reference,
+references using their remove button. Limits are 4,000 characters per reference,
 8,000 characters and 16 references per side. Invalid edits retain the last
 valid reference. Edited copies no longer highlight the original source.
 

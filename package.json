@@ -11,6 +11,7 @@
     "start": "node app/html/server.mjs",
     "build:extension": "npm --prefix app/vscode run build",
     "test": "npm --prefix app/vscode test",
+    "eval:language": "node docs/evaluate-language.mjs",
     "package:extension": "npm --prefix app/vscode run package"
   }
 }
